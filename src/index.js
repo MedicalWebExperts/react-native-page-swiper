@@ -19,6 +19,7 @@ export default class Swiper extends Component {
     pager: PropTypes.bool,
     onPageChange: PropTypes.func,
     activeDotColor: PropTypes.string,
+    pagerStyle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -27,6 +28,10 @@ export default class Swiper extends Component {
     threshold: 25,
     onPageChange: () => {},
     activeDotColor: 'blue',
+    pagerStyle: {
+      position: 'absolute',
+      bottom: 10
+    },
   };
 
   constructor(props) {
@@ -120,6 +125,10 @@ export default class Swiper extends Component {
       flex: 1,
       flexDirection: 'row',
     };
+    
+    const pagerStyle = Object.assign({}, this.props.pagerStyle, {
+      width: this.state.viewWidth
+    });
 
     return (
       <View onLayout={ this.handleLayout.bind(this) } style={ { flex: 1, overflow: 'hidden' } }>
@@ -134,7 +143,7 @@ export default class Swiper extends Component {
           <Dots
             active={ this.state.index }
             activeColor={ this.props.activeDotColor }
-            style={ { position: 'absolute', bottom: 50, width: this.state.viewWidth } }
+            style={ pagerStyle }
             total={ this.props.children.length }
           /> }
       </View>
